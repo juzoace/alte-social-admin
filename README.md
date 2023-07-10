@@ -1,6 +1,5 @@
 # Alte admin dashboard
 
-
 ## Description
 Admin dashboard for Alte social
 
