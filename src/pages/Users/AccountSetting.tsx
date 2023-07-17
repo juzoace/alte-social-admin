@@ -1,19 +1,477 @@
 import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { setPageTitle } from '../../store/themeConfigSlice';
+import { DataTable } from 'mantine-datatable';
 import { useDispatch } from 'react-redux';
+import { setPageTitle } from '../../store/themeConfigSlice';
 import { use } from 'i18next';
 import { UserProfile } from '../../interfaces/Users/Users';
+
+const rowData: UserProfile[] = [
+    {
+        id: 1,
+        path: 'profile-35.png',
+        name: 'Alan Green',
+        role: 'Web Developer',
+        email: 'alan@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0197',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+    },
+    {
+        id: 2,
+        path: 'profile-35.png',
+        name: 'Linda Nelson',
+        role: 'Web Designer',
+        email: 'linda@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0170',
+        gender: 'Female',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: false,
+        blocked: false
+    },
+    {
+        id: 3,
+        path: 'profile-35.png',
+        name: 'Lila Perry',
+        role: 'UX/UI Designer',
+        email: 'lila@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0105',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+        blocked: true
+    },
+    {
+        id: 4,
+        path: 'profile-35.png',
+        name: 'Andy King',
+        role: 'Project Lead',
+        email: 'andy@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0194',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+        blocked: true
+    },
+    {
+        id: 5,
+        path: 'profile-35.png',
+        name: 'Jesse Cory',
+        role: 'Web Developer',
+        email: 'jesse@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0161',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Completed',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: false,
+        blocked: false
+    },
+    {
+        id: 6,
+        path: 'profile-35.png',
+        name: 'Xavier',
+        role: 'UX/UI Designer',
+        email: 'xavier@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0155',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Completed',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+        blocked: false
+    },
+    {
+        id: 7,
+        path: 'profile-35.png',
+        name: 'Susan',
+        role: 'Project Manager',
+        email: 'susan@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0118',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Completed',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+        blocked: false
+    },
+    {
+        id: 8,
+        path: 'profile-35.png',
+        name: 'Raci Lopez',
+        role: 'Web Developer',
+        email: 'traci@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0135',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: false,
+        blocked: false
+    },
+    {
+        id: 9,
+        path: 'profile-35.png',
+        name: 'Steven Mendoza',
+        role: 'HR',
+        email: 'sokol@verizon.net',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0100',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: false,
+        blocked: false
+    },
+    {
+        id: 10,
+        path: 'profile-35.png',
+        name: 'James Cantrell',
+        role: 'Web Developer',
+        email: 'sravani@comcast.net',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0134',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: false,
+        blocked: false
+    },
+    {
+        id: 11,
+        path: 'profile-35.png',
+        name: 'Reginald Brown',
+        role: 'Web Designer',
+        email: 'drhyde@gmail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0153',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+        blocked: false
+    },
+    {
+        id: 12,
+        path: 'profile-35.png',
+        name: 'Stacey Smith',
+        role: 'Chief technology officer',
+        email: 'maikelnai@optonline.net',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0115',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+        blocked: false
+    },
+]
 
 const AccountSetting = () => {
     const dispatch = useDispatch();
 
+    const [usersList] = useState<UserProfile[]>([
+        {
+            id: 1,
+            path: 'profile-35.png',
+            name: 'Alan Green',
+            role: 'Web Developer',
+            email: 'alan@mail.com',
+            dateOfBirth: '5th January 1992',
+            phone: '+1 202 555 0197',
+            gender: 'Male',
+            subscription: 'Basic',
+            status: 'Pending',
+            maritalStatus: 'Single',
+            tribe: 'Igbo',
+            employmentStatus: 'Employed',
+            reported: true,
+        },
+        {
+            id: 2,
+            path: 'profile-35.png',
+            name: 'Linda Nelson',
+            role: 'Web Designer',
+            email: 'linda@mail.com',
+            dateOfBirth: '5th January 1992',
+            phone: '+1 202 555 0170',
+            gender: 'Female',
+            subscription: 'Basic',
+            status: 'Pending',
+            maritalStatus: 'Single',
+            tribe: 'Igbo',
+            employmentStatus: 'Employed',
+            reported: false,
+            blocked: false
+        },
+        {
+            id: 3,
+            path: 'profile-35.png',
+            name: 'Lila Perry',
+            role: 'UX/UI Designer',
+            email: 'lila@mail.com',
+            dateOfBirth: '5th January 1992',
+            phone: '+1 202 555 0105',
+            gender: 'Male',
+            subscription: 'Basic',
+            status: 'Pending',
+            maritalStatus: 'Single',
+            tribe: 'Igbo',
+            employmentStatus: 'Employed',
+            reported: true,
+            blocked: true
+        },
+        {
+            id: 4,
+            path: 'profile-35.png',
+            name: 'Andy King',
+            role: 'Project Lead',
+            email: 'andy@mail.com',
+            dateOfBirth: '5th January 1992',
+            phone: '+1 202 555 0194',
+            gender: 'Male',
+            subscription: 'Basic',
+            status: 'Pending',
+            maritalStatus: 'Single',
+            tribe: 'Igbo',
+            employmentStatus: 'Employed',
+            reported: true,
+            blocked: true
+        },
+        {
+            id: 5,
+            path: 'profile-35.png',
+            name: 'Jesse Cory',
+            role: 'Web Developer',
+            email: 'jesse@mail.com',
+            dateOfBirth: '5th January 1992',
+            phone: '+1 202 555 0161',
+            gender: 'Male',
+            subscription: 'Basic',
+            status: 'Completed',
+            maritalStatus: 'Single',
+            tribe: 'Igbo',
+            employmentStatus: 'Employed',
+            reported: false,
+            blocked: false
+        },
+        {
+            id: 6,
+            path: 'profile-35.png',
+            name: 'Xavier',
+            role: 'UX/UI Designer',
+            email: 'xavier@mail.com',
+            dateOfBirth: '5th January 1992',
+            phone: '+1 202 555 0155',
+            gender: 'Male',
+            subscription: 'Basic',
+            status: 'Completed',
+            maritalStatus: 'Single',
+            tribe: 'Igbo',
+            employmentStatus: 'Employed',
+            reported: true,
+            blocked: false
+        },
+        {
+            id: 7,
+            path: 'profile-35.png',
+            name: 'Susan',
+            role: 'Project Manager',
+            email: 'susan@mail.com',
+            dateOfBirth: '5th January 1992',
+            phone: '+1 202 555 0118',
+            gender: 'Male',
+            subscription: 'Basic',
+            status: 'Completed',
+            maritalStatus: 'Single',
+            tribe: 'Igbo',
+            employmentStatus: 'Employed',
+            reported: true,
+            blocked: false
+        },
+        {
+            id: 8,
+            path: 'profile-35.png',
+            name: 'Raci Lopez',
+            role: 'Web Developer',
+            email: 'traci@mail.com',
+            dateOfBirth: '5th January 1992',
+            phone: '+1 202 555 0135',
+            gender: 'Male',
+            subscription: 'Basic',
+            status: 'Pending',
+            maritalStatus: 'Single',
+            tribe: 'Igbo',
+            employmentStatus: 'Employed',
+            reported: false,
+            blocked: false
+        },
+        {
+            id: 9,
+            path: 'profile-35.png',
+            name: 'Steven Mendoza',
+            role: 'HR',
+            email: 'sokol@verizon.net',
+            dateOfBirth: '5th January 1992',
+            phone: '+1 202 555 0100',
+            gender: 'Male',
+            subscription: 'Basic',
+            status: 'Pending',
+            maritalStatus: 'Single',
+            tribe: 'Igbo',
+            employmentStatus: 'Employed',
+            reported: false,
+            blocked: false
+        },
+        {
+            id: 10,
+            path: 'profile-35.png',
+            name: 'James Cantrell',
+            role: 'Web Developer',
+            email: 'sravani@comcast.net',
+            dateOfBirth: '5th January 1992',
+            phone: '+1 202 555 0134',
+            gender: 'Male',
+            subscription: 'Basic',
+            status: 'Pending',
+            maritalStatus: 'Single',
+            tribe: 'Igbo',
+            employmentStatus: 'Employed',
+            reported: false,
+            blocked: false
+        },
+        {
+            id: 11,
+            path: 'profile-35.png',
+            name: 'Reginald Brown',
+            role: 'Web Designer',
+            email: 'drhyde@gmail.com',
+            dateOfBirth: '5th January 1992',
+            phone: '+1 202 555 0153',
+            gender: 'Male',
+            subscription: 'Basic',
+            status: 'Pending',
+            maritalStatus: 'Single',
+            tribe: 'Igbo',
+            employmentStatus: 'Employed',
+            reported: true,
+            blocked: false
+        },
+        {
+            id: 12,
+            path: 'profile-35.png',
+            name: 'Stacey Smith',
+            role: 'Chief technology officer',
+            email: 'maikelnai@optonline.net',
+            dateOfBirth: '5th January 1992',
+            phone: '+1 202 555 0115',
+            gender: 'Male',
+            subscription: 'Basic',
+            status: 'Pending',
+            maritalStatus: 'Single',
+            tribe: 'Igbo',
+            employmentStatus: 'Employed',
+            reported: true,
+            blocked: false
+        },
+    ]);
+
+    const PAGE_SIZES = [10, 20, 30, 50, 100];
+
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
+    const [initialRecords, setInitialRecords] = useState(rowData);
+    const [recordsData, setRecordsData] = useState(initialRecords);
+    const [search, setSearch] = useState('');
+
+
     const [searchParams, setSearchParams] = useSearchParams();
     const [userData, setUserData] = useState<UserProfile>();
+
+    const [searchAllUsers, setSearchAllUsers] = useState<string>('');
+    const [filteredAllUsersList, setFilteredAllUsersList] = useState<UserProfile[]>(usersList);
 
     useEffect(() => {
         dispatch(setPageTitle('Account Setting'));
     });
+
+    useEffect(() => {
+        setPage(1);
+    }, [pageSize]);
+
+    useEffect(() => {
+        const from = (page - 1) * pageSize;
+        const to = from + pageSize;
+        setRecordsData([...initialRecords.slice(from, to)]);
+    }, [page, pageSize, initialRecords]);
+
+    useEffect(() => {
+        setInitialRecords(() => {
+            return rowData.filter((item) => {
+                return (
+                    item?.name?.toLowerCase().includes(search.toLowerCase()) ||
+                    item.phone?.toLowerCase().includes(search.toLowerCase())
+                );
+            });
+        });
+    }, [search]);
+
+    useEffect(() => {
+        setFilteredAllUsersList(() => {
+            return usersList.filter((item: any) => {
+                const pattern = /[\d+\(\)]/;
+                if (pattern.test(searchAllUsers)) {
+                    return item.phone.includes(searchAllUsers);
+                }
+                return item.name.toLowerCase().includes(searchAllUsers.toLowerCase());
+            });
+        });
+    }, [searchAllUsers, usersList]);
 
     useEffect(() => {
         const value = searchParams.get('user');
@@ -43,7 +501,6 @@ const AccountSetting = () => {
             </ul>
             <div className="pt-5">
                 <div className="flex items-center justify-between mb-5">
-                    {/* <h5 className="font-semibold text-lg dark:text-white-light">Settings</h5> */}
                 </div>
                 <div>
                     <ul className="sm:flex font-semibold border-b border-[#ebedf2] dark:border-[#191e3a] mb-5 whitespace-nowrap overflow-y-auto">
@@ -64,6 +521,20 @@ const AccountSetting = () => {
                                 Home
                             </button>
                         </li>
+
+                        <li className="inline-block">
+                            <button
+                                onClick={() => toggleTabs('referrals')}
+                                className={`flex gap-2 p-4 border-b border-transparent hover:border-primary hover:text-primary ${tabs === 'referrals' ? '!border-primary text-primary' : ''}`}
+                            >
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="6" r="4" stroke="currentColor" strokeWidth="1.5" />
+                                    <ellipse opacity="0.5" cx="12" cy="17" rx="7" ry="4" stroke="currentColor" strokeWidth="1.5" />
+                                </svg>
+                                Referrals
+                            </button>
+                        </li>
+
                         <li className="inline-block">
                             <button
                                 onClick={() => toggleTabs('payment-details')}
@@ -80,39 +551,6 @@ const AccountSetting = () => {
                                     />
                                 </svg>
                                 Payment Details
-                            </button>
-                        </li>
-                        <li className="inline-block">
-                            <button
-                                onClick={() => toggleTabs('preferences')}
-                                className={`flex gap-2 p-4 border-b border-transparent hover:border-primary hover:text-primary ${tabs === 'preferences' ? '!border-primary text-primary' : ''}`}
-                            >
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="6" r="4" stroke="currentColor" strokeWidth="1.5" />
-                                    <ellipse opacity="0.5" cx="12" cy="17" rx="7" ry="4" stroke="currentColor" strokeWidth="1.5" />
-                                </svg>
-                                Preferences
-                            </button>
-                        </li>
-                        <li className="inline-block">
-                            <button
-                                onClick={() => toggleTabs('danger-zone')}
-                                className={`flex gap-2 p-4 border-b border-transparent hover:border-primary hover:text-primary ${tabs === 'danger-zone' ? '!border-primary text-primary' : ''}`}
-                            >
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M5.00659 6.93309C5.04956 5.7996 5.70084 4.77423 6.53785 3.93723C7.9308 2.54428 10.1532 2.73144 11.0376 4.31617L11.6866 5.4791C12.2723 6.52858 12.0372 7.90533 11.1147 8.8278M17.067 18.9934C18.2004 18.9505 19.2258 18.2992 20.0628 17.4622C21.4558 16.0692 21.2686 13.8468 19.6839 12.9624L18.5209 12.3134C17.4715 11.7277 16.0947 11.9628 15.1722 12.8853"
-                                        stroke="currentColor"
-                                        strokeWidth="1.5"
-                                    />
-                                    <path
-                                        opacity="0.5"
-                                        d="M5.00655 6.93311C4.93421 8.84124 5.41713 12.0817 8.6677 15.3323C11.9183 18.5829 15.1588 19.0658 17.0669 18.9935M15.1722 12.8853C15.1722 12.8853 14.0532 14.0042 12.0245 11.9755C9.99578 9.94676 11.1147 8.82782 11.1147 8.82782"
-                                        stroke="currentColor"
-                                        strokeWidth="1.5"
-                                    />
-                                </svg>
-                                Danger Zone
                             </button>
                         </li>
                     </ul>
@@ -261,332 +699,33 @@ const AccountSetting = () => {
                 ) : (
                     ''
                 )}
-
-                {/* {tabs === 'payment-details' ? (
-                    <div>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
-                            <div className="panel">
-                                <div className="mb-5">
-                                    <h5 className="font-semibold text-lg mb-4">Billing Address</h5>
-                                    <p>
-                                        Changes to your <span className="text-primary">Billing</span> information will take effect starting with scheduled payment and will be refelected on your next
-                                        invoice.
-                                    </p>
-                                </div>
-                                <div className="mb-5">
-                                    <div className="border-b border-[#ebedf2] dark:border-[#1b2e4b]">
-                                        <div className="flex items-start justify-between py-3">
-                                            <h6 className="text-[#515365] font-bold dark:text-white-dark text-[15px]">
-                                                Address #1
-                                                <span className="block text-white-dark dark:text-white-light font-normal text-xs mt-1">2249 Caynor Circle, New Brunswick, New Jersey</span>
-                                            </h6>
-                                            <div className="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
-                                                <button className="btn btn-dark">Edit</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="border-b border-[#ebedf2] dark:border-[#1b2e4b]">
-                                        <div className="flex items-start justify-between py-3">
-                                            <h6 className="text-[#515365] font-bold dark:text-white-dark text-[15px]">
-                                                Address #2
-                                                <span className="block text-white-dark dark:text-white-light font-normal text-xs mt-1">4262 Leverton Cove Road, Springfield, Massachusetts</span>
-                                            </h6>
-                                            <div className="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
-                                                <button className="btn btn-dark">Edit</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className="flex items-start justify-between py-3">
-                                            <h6 className="text-[#515365] font-bold dark:text-white-dark text-[15px]">
-                                                Address #3
-                                                <span className="block text-white-dark dark:text-white-light font-normal text-xs mt-1">2692 Berkshire Circle, Knoxville, Tennessee</span>
-                                            </h6>
-                                            <div className="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
-                                                <button className="btn btn-dark">Edit</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button className="btn btn-primary">Add Address</button>
-                            </div>
-                            <div className="panel">
-                                <div className="mb-5">
-                                    <h5 className="font-semibold text-lg mb-4">Payment History</h5>
-                                    <p>
-                                        Changes to your <span className="text-primary">Payment Method</span> information will take effect starting with scheduled payment and will be refelected on your
-                                        next invoice.
-                                    </p>
-                                </div>
-                                <div className="mb-5">
-                                    <div className="border-b border-[#ebedf2] dark:border-[#1b2e4b]">
-                                        <div className="flex items-start justify-between py-3">
-                                            <div className="flex-none ltr:mr-4 rtl:ml-4">
-                                                <img src="/assets/images/card-americanexpress.svg" alt="img" />
-                                            </div>
-                                            <h6 className="text-[#515365] font-bold dark:text-white-dark text-[15px]">
-                                                Mastercard
-                                                <span className="block text-white-dark dark:text-white-light font-normal text-xs mt-1">XXXX XXXX XXXX 9704</span>
-                                            </h6>
-                                            <div className="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
-                                                <button className="btn btn-dark">Edit</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="border-b border-[#ebedf2] dark:border-[#1b2e4b]">
-                                        <div className="flex items-start justify-between py-3">
-                                            <div className="flex-none ltr:mr-4 rtl:ml-4">
-                                                <img src="/assets/images/card-mastercard.svg" alt="img" />
-                                            </div>
-                                            <h6 className="text-[#515365] font-bold dark:text-white-dark text-[15px]">
-                                                American Express
-                                                <span className="block text-white-dark dark:text-white-light font-normal text-xs mt-1">XXXX XXXX XXXX 310</span>
-                                            </h6>
-                                            <div className="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
-                                                <button className="btn btn-dark">Edit</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className="flex items-start justify-between py-3">
-                                            <div className="flex-none ltr:mr-4 rtl:ml-4">
-                                                <img src="/assets/images/card-visa.svg" alt="img" />
-                                            </div>
-                                            <h6 className="text-[#515365] font-bold dark:text-white-dark text-[15px]">
-                                                Visa
-                                                <span className="block text-white-dark dark:text-white-light font-normal text-xs mt-1">XXXX XXXX XXXX 5264</span>
-                                            </h6>
-                                            <div className="flex items-start justify-between ltr:ml-auto rtl:mr-auto">
-                                                <button className="btn btn-dark">Edit</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button className="btn btn-primary">Add Payment Method</button>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                            <div className="panel">
-                                <div className="mb-5">
-                                    <h5 className="font-semibold text-lg mb-4">Add Billing Address</h5>
-                                    <p>
-                                        Changes your New <span className="text-primary">Billing</span> Information.
-                                    </p>
-                                </div>
-                                <div className="mb-5">
-                                    <form>
-                                        <div className="mb-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <div>
-                                                <label htmlFor="billingName">Name</label>
-                                                <input id="billingName" type="text" placeholder="Enter Name" className="form-input" />
-                                            </div>
-                                            <div>
-                                                <label htmlFor="billingEmail">Email</label>
-                                                <input id="billingEmail" type="email" placeholder="Enter Email" className="form-input" />
-                                            </div>
-                                        </div>
-                                        <div className="mb-5">
-                                            <label htmlFor="billingAddress">Address</label>
-                                            <input id="billingAddress" type="text" placeholder="Enter Address" className="form-input" />
-                                        </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-5">
-                                            <div className="md:col-span-2">
-                                                <label htmlFor="billingCity">City</label>
-                                                <input id="billingCity" type="text" placeholder="Enter City" className="form-input" />
-                                            </div>
-                                            <div>
-                                                <label htmlFor="billingState">State</label>
-                                                <select id="billingState" className="form-select text-white-dark">
-                                                    <option>Choose...</option>
-                                                    <option>...</option>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label htmlFor="billingZip">Zip</label>
-                                                <input id="billingZip" type="text" placeholder="Enter Zip" className="form-input" />
-                                            </div>
-                                        </div>
-                                        <button type="button" className="btn btn-primary">
-                                            Add
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div className="panel">
-                                <div className="mb-5">
-                                    <h5 className="font-semibold text-lg mb-4">Add Payment Method</h5>
-                                    <p>
-                                        Changes your New <span className="text-primary">Payment Method </span>
-                                        Information.
-                                    </p>
-                                </div>
-                                <div className="mb-5">
-                                    <form>
-                                        <div className="mb-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <div>
-                                                <label htmlFor="payBrand">Card Brand</label>
-                                                <select id="payBrand" className="form-select text-white-dark">
-                                                    <option value="Mastercard">Mastercard</option>
-                                                    <option value="American Express">American Express</option>
-                                                    <option value="Visa">Visa</option>
-                                                    <option value="Discover">Discover</option>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label htmlFor="payNumber">Card Number</label>
-                                                <input id="payNumber" type="text" placeholder="Card Number" className="form-input" />
-                                            </div>
-                                        </div>
-                                        <div className="mb-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <div>
-                                                <label htmlFor="payHolder">Holder Name</label>
-                                                <input id="payHolder" type="text" placeholder="Holder Name" className="form-input" />
-                                            </div>
-                                            <div>
-                                                <label htmlFor="payCvv">CVV/CVV2</label>
-                                                <input id="payCvv" type="text" placeholder="CVV" className="form-input" />
-                                            </div>
-                                        </div>
-                                        <div className="mb-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <div>
-                                                <label htmlFor="payExp">Card Expiry</label>
-                                                <input id="payExp" type="text" placeholder="Card Expiry" className="form-input" />
-                                            </div>
-                                        </div>
-                                        <button type="button" className="btn btn-primary">
-                                            Add
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                {tabs === 'referrals' ? (
+                    <div className="switch">
+                        <DataTable
+                        striped
+                        className="whitespace-nowrap table-striped"
+                        records={recordsData}
+                        columns={[
+                            { accessor: 'id', title: 'ID' },
+                            { accessor: 'name', title: ' User' },
+                            { accessor: 'status', title: 'Status' },
+                            { accessor: 'email', title: 'Email' },
+                            { accessor: 'phone', title: 'Phone No.' },
+                            { accessor: 'dateOfBirth', title: 'Date of Birth' },
+                        ]}
+                        totalRecords={initialRecords.length}
+                        recordsPerPage={pageSize}
+                        page={page}
+                        onPageChange={(p) => setPage(p)}
+                        recordsPerPageOptions={PAGE_SIZES}
+                        onRecordsPerPageChange={setPageSize}
+                        minHeight={200}
+                        paginationText={({ from, to, totalRecords }) => `Showing  ${from} to ${to} of ${totalRecords} entries`}
+                    />
                     </div>
                 ) : (
                     ''
                 )}
-                {tabs === 'preferences' ? (
-                    <div className="switch">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-5">
-                            <div className="panel space-y-5">
-                                <h5 className="font-semibold text-lg mb-4">Choose Theme</h5>
-                                <div className="flex justify-around">
-                                    <div className="flex">
-                                        <label className="inline-flex cursor-pointer">
-                                            <input className="form-radio ltr:mr-4 rtl:ml-4 cursor-pointer" type="radio" name="flexRadioDefault" defaultChecked />
-                                            <span>
-                                                <img className="ms-3" width="100" height="68" alt="settings-dark" src="/assets/images/settings-light.svg" />
-                                            </span>
-                                        </label>
-                                    </div>
-
-                                    <label className="inline-flex cursor-pointer">
-                                        <input className="form-radio ltr:mr-4 rtl:ml-4 cursor-pointer" type="radio" name="flexRadioDefault" />
-                                        <span>
-                                            <img className="ms-3" width="100" height="68" alt="settings-light" src="/assets/images/settings-dark.svg" />
-                                        </span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="panel space-y-5">
-                                <h5 className="font-semibold text-lg mb-4">Activity data</h5>
-                                <p>Download your Summary, Task and Payment History Data</p>
-                                <button type="button" className="btn btn-primary">
-                                    Download Data
-                                </button>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                            <div className="panel space-y-5">
-                                <h5 className="font-semibold text-lg mb-4">Public Profile</h5>
-                                <p>
-                                    Your <span className="text-primary">Profile</span> will be visible to anyone on the network.
-                                </p>
-                                <label className="w-12 h-6 relative">
-                                    <input type="checkbox" className="custom_switch absolute w-full h-full opacity-0 z-10 cursor-pointer peer" id="custom_switch_checkbox1" />
-                                    <span className="bg-[#ebedf2] dark:bg-dark block h-full rounded-full before:absolute before:left-1 before:bg-white dark:before:bg-white-dark dark:peer-checked:before:bg-white before:bottom-1 before:w-4 before:h-4 before:rounded-full peer-checked:before:left-7 peer-checked:bg-primary before:transition-all before:duration-300"></span>
-                                </label>
-                            </div>
-                            <div className="panel space-y-5">
-                                <h5 className="font-semibold text-lg mb-4">Show my email</h5>
-                                <p>
-                                    Your <span className="text-primary">Email</span> will be visible to anyone on the network.
-                                </p>
-                                <label className="w-12 h-6 relative">
-                                    <input type="checkbox" className="custom_switch absolute w-full h-full opacity-0 z-10 cursor-pointer peer" id="custom_switch_checkbox2" />
-                                    <span className="bg-[#ebedf2] dark:bg-dark block h-full rounded-full before:absolute before:left-1 before:bg-white  dark:before:bg-white-dark dark:peer-checked:before:bg-white before:bottom-1 before:w-4 before:h-4 before:rounded-full peer-checked:before:left-7 peer-checked:bg-primary before:transition-all before:duration-300"></span>
-                                </label>
-                            </div>
-                            <div className="panel space-y-5">
-                                <h5 className="font-semibold text-lg mb-4">Enable keyboard shortcuts</h5>
-                                <p>
-                                    When enabled, press <span className="text-primary">ctrl</span> for help
-                                </p>
-                                <label className="w-12 h-6 relative">
-                                    <input type="checkbox" className="custom_switch absolute w-full h-full opacity-0 z-10 cursor-pointer peer" id="custom_switch_checkbox3" />
-                                    <span className="bg-[#ebedf2] dark:bg-dark block h-full rounded-full before:absolute before:left-1 before:bg-white  dark:before:bg-white-dark dark:peer-checked:before:bg-white before:bottom-1 before:w-4 before:h-4 before:rounded-full peer-checked:before:left-7 peer-checked:bg-primary before:transition-all before:duration-300"></span>
-                                </label>
-                            </div>
-                            <div className="panel space-y-5">
-                                <h5 className="font-semibold text-lg mb-4">Hide left navigation</h5>
-                                <p>
-                                    Sidebar will be <span className="text-primary">hidden</span> by default
-                                </p>
-                                <label className="w-12 h-6 relative">
-                                    <input type="checkbox" className="custom_switch absolute w-full h-full opacity-0 z-10 cursor-pointer peer" id="custom_switch_checkbox4" />
-                                    <span className="bg-[#ebedf2] dark:bg-dark block h-full rounded-full before:absolute before:left-1 before:bg-white  dark:before:bg-white-dark dark:peer-checked:before:bg-white before:bottom-1 before:w-4 before:h-4 before:rounded-full peer-checked:before:left-7 peer-checked:bg-primary before:transition-all before:duration-300"></span>
-                                </label>
-                            </div>
-                            <div className="panel space-y-5">
-                                <h5 className="font-semibold text-lg mb-4">Advertisements</h5>
-                                <p>
-                                    Display <span className="text-primary">Ads</span> on your dashboard
-                                </p>
-                                <label className="w-12 h-6 relative">
-                                    <input type="checkbox" className="custom_switch absolute w-full h-full opacity-0 z-10 cursor-pointer peer" id="custom_switch_checkbox5" />
-                                    <span className="bg-[#ebedf2] dark:bg-dark block h-full rounded-full before:absolute before:left-1 before:bg-white  dark:before:bg-white-dark dark:peer-checked:before:bg-white before:bottom-1 before:w-4 before:h-4 before:rounded-full peer-checked:before:left-7 peer-checked:bg-primary before:transition-all before:duration-300"></span>
-                                </label>
-                            </div>
-                            <div className="panel space-y-5">
-                                <h5 className="font-semibold text-lg mb-4">Social Profile</h5>
-                                <p>
-                                    Enable your <span className="text-primary">social</span> profiles on this network
-                                </p>
-                                <label className="w-12 h-6 relative">
-                                    <input type="checkbox" className="custom_switch absolute w-full h-full opacity-0 z-10 cursor-pointer peer" id="custom_switch_checkbox6" />
-                                    <span className="bg-[#ebedf2] dark:bg-dark block h-full rounded-full before:absolute before:left-1 before:bg-white  dark:before:bg-white-dark dark:peer-checked:before:bg-white before:bottom-1 before:w-4 before:h-4 before:rounded-full peer-checked:before:left-7 peer-checked:bg-primary before:transition-all before:duration-300"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                ) : (
-                    ''
-                )}
-                {tabs === 'danger-zone' ? (
-                    <div className="switch">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                            <div className="panel space-y-5">
-                                <h5 className="font-semibold text-lg mb-4">Purge Cache</h5>
-                                <p>Remove the active resource from the cache without waiting for the predetermined cache expiry time.</p>
-                                <button className="btn btn-secondary">Clear</button>
-                            </div>
-                            <div className="panel space-y-5">
-                                <h5 className="font-semibold text-lg mb-4">Deactivate Account</h5>
-                                <p>You will not be able to receive messages, notifications for up to 24 hours.</p>
-                                <label className="w-12 h-6 relative">
-                                    <input type="checkbox" className="custom_switch absolute w-full h-full opacity-0 z-10 cursor-pointer peer" id="custom_switch_checkbox7" />
-                                    <span className="bg-[#ebedf2] dark:bg-dark block h-full rounded-full before:absolute before:left-1 before:bg-white dark:before:bg-white-dark dark:peer-checked:before:bg-white before:bottom-1 before:w-4 before:h-4 before:rounded-full peer-checked:before:left-7 peer-checked:bg-primary before:transition-all before:duration-300"></span>
-                                </label>
-                            </div>
-                            <div className="panel space-y-5">
-                                <h5 className="font-semibold text-lg mb-4">Delete Account</h5>
-                                <p>Once you delete the account, there is no going back. Please be certain.</p>
-                                <button className="btn btn-danger btn-delete-account">Delete my account</button>
-                            </div>
-                        </div>
-                    </div>
-                ) : (
-                    ''
-                )} */}
             </div>
         </div>
     );
