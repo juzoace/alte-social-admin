@@ -1,4 +1,4 @@
-interface AdminProfile {
+export interface AdminProfile {
     id: number;
     path?: string;
     name?: string;
