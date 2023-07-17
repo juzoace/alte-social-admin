@@ -559,10 +559,10 @@ const AllUsers = () => {
                         totalRecords={initialRecords.length}
                         recordsPerPage={pageSize}
                         onRowClick={(user) => {
-                            console.log(user)
                             setShowUserModal(true);
                             setSelectedUser(user);
                         }}
+
                         page={page}
                         onPageChange={(p) => setPage(p)}
                         recordsPerPageOptions={PAGE_SIZES}
