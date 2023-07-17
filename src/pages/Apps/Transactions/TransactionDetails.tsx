@@ -27,7 +27,7 @@ const TransactionDetails = () => {
                 <div className="">
                     <div className="space-y-1 mt-6 text-white-dark">
                             <div>75b Olonode Street, Off Spencer St, Alagomeji-Yaba, Lagos</div>
-                            <div>hello@credpal.com</div>
+                            <div>hello@altsocial.com</div>
                         <div>01 344 0091</div>
                     </div>
                 </div>
@@ -38,22 +38,22 @@ const TransactionDetails = () => {
                 <div className="flex">
                     <div className="w-1/4  border border-ash">
                         <div className="p-4">
-                        <h2 className="text-xl font-bold  border p-2">Customer Name</h2>
-                        <h2 className="text-xl font-bold  border p-2">Transaction ID</h2>
-                        <h2 className="text-xl font-bold  border p-2">Transaction Status</h2>
-                        <h2 className="text-xl font-bold  border p-2">Transaction Date</h2>
-                        <h2 className="text-xl font-bold  border p-2">Amount</h2>
-                        <h2 className="text-xl font-bold  border p-2">Customer Phone</h2>
+                        <h2 className="font-bold  border p-2">Customer Name</h2>
+                        <h2 className="font-bold  border p-2">Transaction ID</h2>
+                        <h2 className="font-bold  border p-2">Transaction Status</h2>
+                        <h2 className="font-bold  border p-2">Transaction Date</h2>
+                        <h2 className="font-bold  border p-2">Amount</h2>
+                        <h2 className="font-bold  border p-2">Customer Phone</h2>
                         </div>
                     </div>
                     <div className="flex-1 bg-white border border-ash">
                         <div className="p-4">
-                        <p className="text-lg  border p-2">{transactionData?.initiatorName} </p>
-                        <p className="text-lg  border p-2">{transactionData?.id}</p>
-                        <p className="text-lg  border p-2">{transactionData?.status}</p>
-                        <p className="text-lg  border p-2">{transactionData?.date}</p>
-                        <p className="text-lg  border p-2">{transactionData?.amount}</p>
-                        <p className="text-lg  border p-2">{transactionData?.phone} </p>
+                        <p className="  border p-2">{transactionData?.initiatorName} </p>
+                        <p className="border p-2">{transactionData?.id}</p>
+                        <p className="border p-2">{transactionData?.status}</p>
+                        <p className="border p-2">{transactionData?.date}</p>
+                        <p className="border p-2">{transactionData?.amount}</p>
+                        <p className="border p-2">{transactionData?.phone} </p>
 
                         </div>
                     </div>

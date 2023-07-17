@@ -252,8 +252,6 @@ const AllTransactions = () => {
                                 textAlignment: 'center',
                                 render: ({ id, initiatorName, status, email, date, phone, amount }) => (
                                     <div className="flex gap-4 items-center w-max mx-auto" onClick={(recordsData) => {
-                                        // setShowTransactionModal(true);
-                                        // setSelectedTransaction(recordsData);
                                         console.log( {id, initiatorName, status, email, date, phone, amount} );
                                     }}>
 
