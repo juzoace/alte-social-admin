@@ -1,10 +1,217 @@
 import { useState, Fragment, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import { DataTable } from 'mantine-datatable';
 import Swal from 'sweetalert2';
 import { useDispatch } from 'react-redux';
 import { setPageTitle } from '../../../store/themeConfigSlice';
 import { Link } from 'react-router-dom';
 import { UserProfile } from '../../../interfaces/Users/Users';
+
+const rowData: UserProfile[] = [
+    {
+        id: 1,
+        path: 'profile-35.png',
+        name: 'Alan Green',
+        role: 'Web Developer',
+        email: 'alan@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0197',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+    },
+    {
+        id: 2,
+        path: 'profile-35.png',
+        name: 'Linda Nelson',
+        role: 'Web Designer',
+        email: 'linda@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0170',
+        gender: 'Female',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: false,
+        blocked: false
+    },
+    {
+        id: 3,
+        path: 'profile-35.png',
+        name: 'Lila Perry',
+        role: 'UX/UI Designer',
+        email: 'lila@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0105',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+        blocked: true
+    },
+    {
+        id: 4,
+        path: 'profile-35.png',
+        name: 'Andy King',
+        role: 'Project Lead',
+        email: 'andy@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0194',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+        blocked: true
+    },
+    {
+        id: 5,
+        path: 'profile-35.png',
+        name: 'Jesse Cory',
+        role: 'Web Developer',
+        email: 'jesse@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0161',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Completed',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: false,
+        blocked: false
+    },
+    {
+        id: 6,
+        path: 'profile-35.png',
+        name: 'Xavier',
+        role: 'UX/UI Designer',
+        email: 'xavier@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0155',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Completed',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+        blocked: false
+    },
+    {
+        id: 7,
+        path: 'profile-35.png',
+        name: 'Susan',
+        role: 'Project Manager',
+        email: 'susan@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0118',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Completed',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+        blocked: false
+    },
+    {
+        id: 8,
+        path: 'profile-35.png',
+        name: 'Raci Lopez',
+        role: 'Web Developer',
+        email: 'traci@mail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0135',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: false,
+        blocked: false
+    },
+    {
+        id: 9,
+        path: 'profile-35.png',
+        name: 'Steven Mendoza',
+        role: 'HR',
+        email: 'sokol@verizon.net',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0100',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: false,
+        blocked: false
+    },
+    {
+        id: 10,
+        path: 'profile-35.png',
+        name: 'James Cantrell',
+        role: 'Web Developer',
+        email: 'sravani@comcast.net',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0134',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: false,
+        blocked: false
+    },
+    {
+        id: 11,
+        path: 'profile-35.png',
+        name: 'Reginald Brown',
+        role: 'Web Designer',
+        email: 'drhyde@gmail.com',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0153',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+        blocked: false
+    },
+    {
+        id: 12,
+        path: 'profile-35.png',
+        name: 'Stacey Smith',
+        role: 'Chief technology officer',
+        email: 'maikelnai@optonline.net',
+        dateOfBirth: '5th January 1992',
+        phone: '+1 202 555 0115',
+        gender: 'Male',
+        subscription: 'Basic',
+        status: 'Pending',
+        maritalStatus: 'Single',
+        tribe: 'Igbo',
+        employmentStatus: 'Employed',
+        reported: true,
+        blocked: false
+    },
+]
 
 const AllUsers = () => {
     const dispatch = useDispatch();
@@ -214,11 +421,40 @@ const AllUsers = () => {
         },
     ]);
 
+    const PAGE_SIZES = [10, 20, 30, 50, 100];
+
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(PAGE_SIZES[0]);
+    const [initialRecords, setInitialRecords] = useState(rowData);
+    const [recordsData, setRecordsData] = useState(initialRecords);
+    const [search, setSearch] = useState('');
+
+
     const [searchAllUsers, setSearchAllUsers] = useState<string>('');
     const [filteredAllUsersList, setFilteredAllUsersList] = useState<UserProfile[]>(usersList);
     const [showUserModal, setShowUserModal] = useState<boolean>(false);
     const [selectedUser, setSelectedUser] = useState<UserProfile>();
 
+    useEffect(() => {
+        setPage(1);
+    }, [pageSize]);
+
+    useEffect(() => {
+        const from = (page - 1) * pageSize;
+        const to = from + pageSize;
+        setRecordsData([...initialRecords.slice(from, to)]);
+    }, [page, pageSize, initialRecords]);
+
+    useEffect(() => {
+        setInitialRecords(() => {
+            return rowData.filter((item) => {
+                return (
+                    item?.name?.toLowerCase().includes(search.toLowerCase()) ||
+                    item.phone?.toLowerCase().includes(search.toLowerCase())
+                );
+            });
+        });
+    }, [search]);
 
     useEffect(() => {
         setFilteredAllUsersList(() => {
@@ -246,7 +482,7 @@ const AllUsers = () => {
                     <h2 className="text-base">All Users</h2>
                     <div className="flex sm:flex-row flex-col sm:items-center sm:gap-3 gap-4 w-full sm:w-auto">
                         <div className="relative">
-                            <input type="text" placeholder="Search Users" className="form-input py-2 ltr:pr-11 rtl:pl-11 peer" value={searchAllUsers} onChange={(e) => setSearchAllUsers(e.target.value)} />
+                            <input type="text" placeholder="Search Users" className="form-input py-2 ltr:pr-11 rtl:pl-11 peer" value={search} onChange={(e) => setSearch(e.target.value)} />
                             <button type="button" className="absolute ltr:right-[11px] rtl:left-[11px] top-1/2 -translate-y-1/2 peer-focus:text-primary">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="11.5" cy="11.5" r="9.5" stroke="currentColor" strokeWidth="1.5" opacity="0.5"></circle>
@@ -256,7 +492,7 @@ const AllUsers = () => {
                         </div>
                     </div>
                 </div>
-                <table className="table-striped table-hover">
+                {/* <table className="table-striped table-hover">
                     <thead className="bg-gray-300">
                         <tr>
                             <th>Username</th>
@@ -306,7 +542,35 @@ const AllUsers = () => {
                             );
                         })}
                     </tbody>
-                </table>
+                </table> */}
+                <div className="datatables">
+                    <DataTable
+                        striped
+                        className="whitespace-nowrap table-striped"
+                        records={recordsData}
+                        columns={[
+                            { accessor: 'id', title: 'ID' },
+                            { accessor: 'name', title: ' User' },
+                            { accessor: 'status', title: 'Status' },
+                            { accessor: 'email', title: 'Email' },
+                            { accessor: 'phone', title: 'Phone No.' },
+                            { accessor: 'dateOfBirth', title: 'Date of Birth' },
+                        ]}
+                        totalRecords={initialRecords.length}
+                        recordsPerPage={pageSize}
+                        onRowClick={(user) => {
+                            setShowUserModal(true);
+                            setSelectedUser(user);
+                        }}
+
+                        page={page}
+                        onPageChange={(p) => setPage(p)}
+                        recordsPerPageOptions={PAGE_SIZES}
+                        onRecordsPerPageChange={setPageSize}
+                        minHeight={200}
+                        paginationText={({ from, to, totalRecords }) => `Showing  ${from} to ${to} of ${totalRecords} entries`}
+                    />
+                </div>
             </div>
             <Transition appear show={showUserModal} as={Fragment}>
                 <Dialog as="div" open={showUserModal} onClose={() => setShowUserModal(false)} className="relative z-50">
@@ -410,7 +674,7 @@ const AllUsers = () => {
                                                     className="btn bg-white-dark text-white"
                                                     to={{
                                                         pathname: '/users/user-account-settings',
-                                                        search: '?user=' + JSON.stringify(selectedUser),
+                                                        search: '?user=' + encodeURIComponent(JSON.stringify(selectedUser)),
                                                     }}
                                                     target="_blank"
                                                 >
